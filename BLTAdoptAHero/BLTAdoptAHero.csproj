@@ -249,6 +249,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(BANNERLORD_GAME_DIR)\Modules\Bannerlord.Harmony\bin\Win64_Shipping_Client\0Harmony.dll</HintPath>
     </Reference>
+    <Reference Include="JetBrains.Annotations, Version=2023.3.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325">
+      <HintPath>..\packages\JetBrains.Annotations.2023.3.0\lib\netstandard2.0\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="FontAwesome.WPF, Version=4.7.0.37774, Culture=neutral, PublicKeyToken=0758b07a11a4f466">
       <HintPath>..\packages\FontAwesome.WPF.4.7.0.9\lib\net40\FontAwesome.WPF.dll</HintPath>
       <Private>True</Private>
@@ -368,6 +372,7 @@
     <Compile Include="Behaviors\BLTCustomItemsCampaignBehavior.cs" />
     <Compile Include="Behaviors\BLTHeroPowersMissionBehavior.cs" />
     <Compile Include="Behaviors\BLTRemoveAgentsBehavior.cs" />
+    <Compile Include="Behaviors\BLTRosterRepairBehavior.cs" />
     <Compile Include="Behaviors\BLTSummonBehavior.cs" />
     <Compile Include="Behaviors\BLTTournamentMissionBehavior.cs" />
     <Compile Include="Behaviors\BLTTournamentQueueBehavior.cs" />
@@ -564,10 +569,14 @@
     <Content Include="_Module\ModuleData\Languages\TR\strings-powers-TR.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="BannerlordTwitch">
-      <HintPath>C:\SteamLibrary\steamapps\common\Mount &amp; Blade II Bannerlord\Modules\BannerlordTwitch\bin\Win64_Shipping_Client\BannerlordTwitch.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
+    <!-- Was a file reference into whatever BannerlordTwitch.dll happened to be sitting in the
+         installed game at the time, which is a different build's output and went stale the moment
+         another package was deployed there. Build against this tree's own project instead, the way
+         every other BLT build in this workspace does. -->
+    <ProjectReference Include="..\BannerlordTwitch\BannerlordTwitch.csproj">
+      <Project>{a858b7fe-dd3e-4969-9d30-670042c75b16}</Project>
+      <Name>BannerlordTwitch</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
